@@ -1,6 +1,6 @@
 #!/bin/sh -l
 #Script to get current task definition, and based on that add new ecr image address to old template and remove attributes that are not needed, then we send new task definition, get new revision number from output and update service
-#set -e
+set -e
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity | jq -r '.Account')
 ECR_IMAGE="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${GITHUB_SHA_SHORT}"
 TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "$AWS_DEFAULT_REGION")
