@@ -1,6 +1,7 @@
 # fargate-action
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+This action is based on this issue https://github.com/aws/aws-cli/issues/3064
+
 
 ## Inputs
 
