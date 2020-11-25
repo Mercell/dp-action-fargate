@@ -1,24 +1,36 @@
-# fargate-action
+# Mercell/dp-action-fargate
+It is difficult to update the docker image in a Task Definition for a Fargate service.
+The problem is described in this [issue](https://github.com/aws/aws-cli/issues/3064)
 
-This action is based on this issue https://github.com/aws/aws-cli/issues/3064
+This action is based on some of the solutions described in the issue above. 
 
+## Todo
+- refactor environment variables
+- ... 
 
-## Inputs
+## Usage
+Depends on action FranzDiebold/github-env-vars-action to set the $GITHUB_SHA_SHORT 
 
-### `who-to-greet`
+## Example 
 
-**Required** The name of the person to greet. Default `"World"`.
+Set imagetag parameter in AWS Parameter Store
 
-## Outputs
+      - name: Update parameter store
+        uses: Mercell/dp-action-fargate@v1
+        with:
+          entrypoint: /setparam.sh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "eu-central-1"
+          SERVICE_NAME: "message-logger"
 
-### `time`
+Upgrades task definition and reloads the service
 
-The time we greeted you.
-
-## Example usage
-
+      - name: Set github env-vars
+        uses: FranzDiebold/github-env-vars-action@v1.2.1
       - name: Update fargate
-        uses: stigmelling/fargate-action@v1
+        uses: Mercell/dp-action-fargate@v1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
